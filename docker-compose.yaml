@@ -41,6 +41,11 @@ services:
       - db:/var/lib/postgresql/data
 
 
+networks:
+  internal-network:
+    driver: bridge
+    name: cruddur
+
   
 volumes:
   db:
