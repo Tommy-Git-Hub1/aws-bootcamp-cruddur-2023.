@@ -60,8 +60,8 @@ tracer = trace.get_tracer(__name__)
 
 
 #xray
-#xray_url = os.getenv("AWS_XRAY_URL")
-#xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+xray_url = os.getenv("AWS_XRAY_URL")
+xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 
 
@@ -69,7 +69,7 @@ tracer = trace.get_tracer(__name__)
 app = Flask(__name__)
 
 #x-ray
-#XRayMiddleware(app, xray_recorder)
+XRayMiddleware(app, xray_recorder)
 
 
 # Initialize tracing and an exporter that can send data to Honeycomb
@@ -87,6 +87,7 @@ cors = CORS(
   methods="OPTIONS,GET,HEAD,POST"
 )
 
+#cloudwatchg logs
 #@app.after_request
 #def after_request(response):
     #timestamp = strftime('[%Y-%b-%d %H:%M]')
@@ -156,6 +157,7 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
+@xray_recorder.capture('activities_home')
 def data_home():
   data = HomeActivities.run()
   return data, 200
@@ -168,6 +170,7 @@ def data_notifications():
 
 
 @app.route("/api/activities/@<string:handle>", methods=['GET'])
+@xray_recorder.capture('Users')
 def data_handle(handle):
   model = UserActivities.run(handle)
   if model['errors'] is not None:
