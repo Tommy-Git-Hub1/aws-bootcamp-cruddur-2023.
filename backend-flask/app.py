@@ -63,8 +63,8 @@ tracer = trace.get_tracer(__name__)
 
 
 #xray
-xray_url = os.getenv("AWS_XRAY_URL")
-xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
+#xray_url = os.getenv("AWS_XRAY_URL")
+#xray_recorder.configure(service='backend-flask', dynamic_naming=xray_url)
 
 
 
@@ -80,7 +80,7 @@ cognito_jwt_token = CognitoJwtToken(
 )
 
 #x-ray
-XRayMiddleware(app, xray_recorder)
+#XRayMiddleware(app, xray_recorder)
 
 
 # Initialize tracing and an exporter that can send data to Honeycomb
@@ -168,7 +168,7 @@ def data_create_message():
   return
 
 @app.route("/api/activities/home", methods=['GET'])
-@xray_recorder.capture('activities_home')
+#@xray_recorder.capture('activities_home')
 def data_home():
   access_token = extract_access_token(request.headers)
   try:
