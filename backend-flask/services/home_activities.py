@@ -21,4 +21,4 @@ class HomeActivities:
 
     #is for honeycomb
     #span.set_attribute("app.result_lenght", len(results))
-      return results
+    return results
