@@ -113,6 +113,8 @@ def rollbar_test():
 
 #rollbar
 #rollbar_access_token = os.getenv('c26e4e1922004f0b8fcbbe66b1517ded')
+
+'''
 @app.before_first_request
 def init_rollbar():
     """init rollbar module"""
@@ -128,7 +130,7 @@ def init_rollbar():
 
     # send exceptions from `app` to rollbar, using flask's signal system.
     got_request_exception.connect(rollbar.contrib.flask.report_exception, app)
-
+'''
 
 
 
