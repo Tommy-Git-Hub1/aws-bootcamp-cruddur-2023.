@@ -7,7 +7,8 @@ else
   ENDPOINT_URL="--endpoint-url=http://localhost:8000"
 fi
 
-aws dynamodb list-tables $ENDPOINT_URL \ #original output is json
+aws dynamodb list-tables $ENDPOINT_URL \
 --query TableNames \
---output table #changes output from json to table
+--output table
+  
   
