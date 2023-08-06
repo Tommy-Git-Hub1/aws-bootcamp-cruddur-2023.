@@ -17,7 +17,10 @@ tasks:
 
     command:
       export GITPOD_IP=$(curl ifconfig.me)
-      source "$THEIA_WORKSPACE_ROOT/backend-flask/bin/rds-update-sg-rule"
+      export gitpod_ip=$(curl ifconfig.me)
+      gp env gitpod_ip=$(curl ifconfig.me)
+      echo $gitpod_ip
+      
   - name: rect-js
     command:
       cd frontend-react-js

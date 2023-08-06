@@ -5,10 +5,8 @@ import sys
 from datetime import datetime, timedelta, timezone
 import uuid
 import os
-# path navigation
-#current_path will contain the absolute path of the directory where the current script or module is located.
+
 current_path = os.path.dirname(os.path.abspath(__file__))
-#parent_path will contain the absolute path of the directory two levels above the current script or module.
 parent_path = os.path.abspath(os.path.join(current_path, '..', '..'))
 sys.path.append(parent_path)
 from lib.db import db
@@ -36,11 +34,11 @@ def get_user_uuids():
         )
   """
   users = db.query_array_json(sql,{
-    'my_handle':  'Hafis',
-    'other_handle': 'Tommy'
+    'my_handle':  'andrewbrown',
+    'other_handle': 'bayko'
   })
-  my_user    = next((item for item in users if item["handle"] == 'Hafis'), None)
-  other_user = next((item for item in users if item["handle"] == 'Tommy'), None)
+  my_user    = next((item for item in users if item["handle"] == 'andrewbrown'), None)
+  other_user = next((item for item in users if item["handle"] == 'bayko'), None)
   results = {
     'my_user': my_user,
     'other_user': other_user
@@ -69,7 +67,6 @@ def create_message_group(client,message_group_uuid, my_user_uuid, last_message_a
   print(response)
 
 def create_message(client,message_group_uuid, created_at, message, my_user_uuid, my_user_display_name, my_user_handle):
-  table_name = 'cruddur-messages'
   # Entity # Message Group Id
   record = {
     'pk':   {'S': f"MSG#{message_group_uuid}"},
@@ -80,8 +77,8 @@ def create_message(client,message_group_uuid, created_at, message, my_user_uuid,
     'user_display_name': {'S': my_user_display_name},
     'user_handle': {'S': my_user_handle}
   }
-  
   # insert the record into the table
+  table_name = 'cruddur-messages'
   response = client.put_item(
     TableName=table_name,
     Item=record
@@ -90,8 +87,9 @@ def create_message(client,message_group_uuid, created_at, message, my_user_uuid,
   print(response)
 
 
-message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700999" #str(uuid.uuid4())
+message_group_uuid = "5ae290ed-55d1-47a0-bc6d-fe2bc2700399" #str(uuid.uuid4())
 users = get_user_uuids()
+
 now = datetime.now(timezone.utc).astimezone()
 
 create_message_group(
